@@ -1,4 +1,4 @@
-package org.tec.datos1.graph.eclipse.handlers;
+package org.tec.datos1.eclipse.grapher.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

@@ -1,4 +1,4 @@
-package org.tec.datos1.graph.eclipse.assets;
+package org.tec.datos1.eclipse.grapher.assets;
 
 import org.eclipse.swt.graphics.GC;
 

@@ -1,4 +1,4 @@
-package org.tec.datos1.graph.eclipse.views;
+package org.tec.datos1.eclipse.grapher.views;
 
 import java.util.LinkedList;
 
@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.tec.datos1.graph.eclipse.assets.Illustrator;
+import org.tec.datos1.eclipse.grapher.assets.Illustrator;
 
 
 public class DiagramView {

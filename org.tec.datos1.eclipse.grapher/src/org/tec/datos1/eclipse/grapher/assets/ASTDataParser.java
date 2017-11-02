@@ -1,4 +1,4 @@
-package org.tec.datos1.graph.eclipse.assets;
+package org.tec.datos1.eclipse.grapher.assets;
 
 import java.util.LinkedList;
 
@@ -13,8 +13,8 @@ import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.swt.graphics.Point;
-import org.tec.datos1.graph.eclipse.assets.Illustrator;
-import org.tec.datos1.graph.eclipse.data.ASTData;
+import org.tec.datos1.eclipse.grapher.assets.Illustrator;
+import org.tec.datos1.eclipse.grapher.data.ASTData;
 
 
 public class ASTDataParser {

@@ -1,4 +1,4 @@
-package org.tec.datos1.graph.eclipse.handlers;
+package org.tec.datos1.eclipse.grapher.handlers;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.e4.core.di.annotations.Execute;

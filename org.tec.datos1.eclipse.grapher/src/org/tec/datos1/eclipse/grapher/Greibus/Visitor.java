@@ -1,4 +1,4 @@
-package org.tec.datos1.graph.eclipse.Greibus;
+package org.tec.datos1.eclipse.grapher.Greibus;
 
 import java.util.ArrayList;
 import java.util.List;

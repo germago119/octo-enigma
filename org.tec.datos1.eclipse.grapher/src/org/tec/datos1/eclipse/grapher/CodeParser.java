@@ -10,8 +10,8 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
-import org.tec.datos1.graph.eclipse.data.ASTData;
-import org.tec.datos1.graph.eclipse.handlers.*;
+import org.tec.datos1.eclipse.grapher.data.ASTData;
+import org.tec.datos1.eclipse.grapher.handlers.*;
 
 public class CodeParser {
 

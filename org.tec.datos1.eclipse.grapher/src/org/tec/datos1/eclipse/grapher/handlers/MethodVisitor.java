@@ -1,10 +1,10 @@
-package org.tec.datos1.graph.eclipse.handlers;
+package org.tec.datos1.eclipse.grapher.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
-import org.tec.datos1.graph.eclipse.data.ASTData;
+import org.tec.datos1.eclipse.grapher.data.ASTData;
 
 public class MethodVisitor extends ASTVisitor {
     List<MethodDeclaration> methods = new ArrayList<MethodDeclaration>();

@@ -1,4 +1,4 @@
-package org.tec.datos1.graph.eclipse.handlers;
+package org.tec.datos1.eclipse.grapher.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
