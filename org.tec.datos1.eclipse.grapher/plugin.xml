@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.4"?>
 <plugin>
 
    <extension
@@ -29,6 +28,12 @@
          </view>
       </perspectiveExtension>
    </extension>
-  
+   <extension
+         id="org.tec.datos1.eclipse.grapher.fragment"
+         point="org.eclipse.e4.workbench.model">
+      <fragment
+            uri="fragment.e4xmi">
+      </fragment>
+   </extension>
 
 </plugin>
