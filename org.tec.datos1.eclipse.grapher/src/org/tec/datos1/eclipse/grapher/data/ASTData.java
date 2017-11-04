@@ -32,15 +32,18 @@ public class ASTData {
 
 
     public ASTData(ASTNode element, String name) {
-        this.element = element;
+    		this.name = name;    
+    		this.element = element;
         this.children = new ArrayList<ASTData>();
-        this.name = name;
+        
     }
 
     public ASTData(ASTNode element, Boolean after, String name) {
         this(element, name);
         this.after = after;
     }
+    
+    
 
     public static ASTData getRoot() {
         return root;
@@ -92,7 +95,11 @@ public class ASTData {
         children.add(Child);
     }
 
-    //Busca la linea de codigo dentro del ASTData
+    /**
+	 *Busca la linea de codigo especifica dentro del ASTData 
+	 * @param lineNumber
+	 * @return
+	 */
     public ASTData findLine(Integer lineNumber) {
 
         if (element != null && (compilationUnit.getLineNumber(element.getStartPosition()) == lineNumber)) {
@@ -110,7 +117,11 @@ public class ASTData {
     
   
 
-    //Cambia el AST de Eclipse a una estructura definida por mi
+
+    /**
+     * Cambia el AST de Eclipse a una estructura definida por mi
+     * @param Statements Lista de nodos hijos para agregar
+     */
     public void addChildren(List<Block> Statements) {
 
         for (Object statement : Statements) {
@@ -128,13 +139,39 @@ public class ASTData {
     //MAE OCUPO QUE METAS LOS BLOQUES DE CODIGO ACA, QUE A PUROS IF VERIFIQUE SI ES UN wHILE
     //POR EJEMPLO Y LE APLIQUE UN THIS.ADDCHILD(WHILESTORAGE) Y UN WHILESTORAGE.ADDCHILDREN(BLOCK.STATEMENTS())
     //POR ESO IMPORTE UN MONTON DE VARAS
+    /**
+     * Metodo auxiliar ayuda al metodo addChildren para poder funcionar
+     */
     public void addChildrenAux(ASTNode child) {
+    		if (child == null) {
+    			return;
+    			}
+    		
+    		//EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR 
+    		
+		String[] clase_temp = child.getClass().toString().split("\\.");
+		String clase = clase_temp[clase_temp.length - 1];
+
+		if (clase.equalsIgnoreCase("WhileStatement")) {
+			
+			WhileStatement While = (WhileStatement) child;
+			ASTData WhileStorage = new ASTData(While,While.getExpression().toString());
+			this.addChild(WhileStorage);
+			
+			Block block = (Block) While.getBody();
+
+			WhileStorage.addChildren(block.statements());
+    	
+		}
     }
-    //TODO
 
     //TODO PRINT ARBOL
-
-    public void print() throws ScriptException {
+    
+    /**
+     * Muestra todo lo que hay dentro del arbol
+     * @throws ScriptException 
+     */
+    	public void print() throws ScriptException {
         if (element == null) {
             if (this.after) {
 
@@ -144,6 +181,21 @@ public class ASTData {
 
         } else {
             //IF PARA CADA STATEMNET Y UN PRINT
+        	
+        	//EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR en serio cambialo si sabes otra forma
+        		
+        		String[] clase_temp = element.getClass().toString().split("\\.");
+        		String clase = clase_temp[clase_temp.length - 1];
+        		
+        		System.out.print(compilationUnit.getLineNumber(element.getStartPosition()) + " ");
+
+        		if (clase.equalsIgnoreCase("WhileStatement")) {
+        			
+        			WhileStatement While = (WhileStatement) element;
+
+    				System.out.println("While(" + While.getExpression() + ")");
+        		}
+    			
         }
 
 
