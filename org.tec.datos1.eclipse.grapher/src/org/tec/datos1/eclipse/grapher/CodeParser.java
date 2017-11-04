@@ -27,7 +27,11 @@ public class CodeParser {
         }
     }
 
-    //Genera el arbol AST
+    /**
+     * Genera el arbol AST
+     * @param IcUnit Clase que se va a analizar
+     * @throws JavaModelException
+     */
     private static void createAST(ICompilationUnit icUnit) throws JavaModelException {
 
         CompilationUnit parse = parse(icUnit);
@@ -37,8 +41,13 @@ public class CodeParser {
 
     }
 
-    //Reads a ICompilationUnit and creates the AST DOM for manipulating the
-    // Java source file
+    /**
+     * Reads a ICompilationUnit and creates the AST DOM for manipulating the
+     * Java source file
+     *
+     * @param unit
+     * @return
+     */
     public static CompilationUnit parse(ICompilationUnit unit) {
 
         ASTParser parser = ASTParser.newParser(AST.JLS3);
@@ -50,6 +59,11 @@ public class CodeParser {
     }
 
     ////parsea el codigo de la clase abierta en momento que se llama el metodo sin necesitar un IC UNIT
+    /**
+	 * Se encarga de parsear el codigo de la 
+	 * clase abierta en el momento en que se llama 
+	 * @throws ExecutionException
+	 */
     public static void execute() throws ExecutionException {
         if (ASTData.getRoot() != null) {
             ASTData.getRoot().deleteChildren();

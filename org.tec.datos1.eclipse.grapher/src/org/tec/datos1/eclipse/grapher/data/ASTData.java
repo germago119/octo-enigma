@@ -107,6 +107,8 @@ public class ASTData {
         return null;
     }
 
+    
+  
 
     //Cambia el AST de Eclipse a una estructura definida por mi
     public void addChildren(List<Block> Statements) {
@@ -152,5 +154,8 @@ public class ASTData {
 
     }
 
+    public Integer getLineNumber() {
+		return compilationUnit.getLineNumber(element.getStartPosition());
+	}
 }
     
