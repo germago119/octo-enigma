@@ -15,7 +15,7 @@ import org.tec.datos1.eclipse.grapher.handlers.*;
 
 public class CodeParser {
 
-	//parsea el codigo de la clase abierta en momento que se llama el metodo con un IC UNIT como parametro
+    //parsea el codigo de la clase abierta en momento que se llama el metodo con un IC UNIT como parametro
     public static void executeSingular(ICompilationUnit unit) throws ExecutionException {
         if (ASTData.getRoot() != null) {
             ASTData.getRoot().deleteChildren();
@@ -29,6 +29,7 @@ public class CodeParser {
 
     /**
      * Genera el arbol AST
+     *
      * @param IcUnit Clase que se va a analizar
      * @throws JavaModelException
      */
@@ -59,11 +60,13 @@ public class CodeParser {
     }
 
     ////parsea el codigo de la clase abierta en momento que se llama el metodo sin necesitar un IC UNIT
+
     /**
-	 * Se encarga de parsear el codigo de la 
-	 * clase abierta en el momento en que se llama 
-	 * @throws ExecutionException
-	 */
+     * Se encarga de parsear el codigo de la
+     * clase abierta en el momento en que se llama
+     *
+     * @throws ExecutionException
+     */
     public static void execute() throws ExecutionException {
         if (ASTData.getRoot() != null) {
             ASTData.getRoot().deleteChildren();

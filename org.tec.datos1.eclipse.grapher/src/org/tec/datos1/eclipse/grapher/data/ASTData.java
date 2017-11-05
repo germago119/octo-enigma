@@ -24,26 +24,25 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 public class ASTData {
 
     static ASTData root;
+    static CompilationUnit compilationUnit;
+    public Boolean after;
     String name;
     ASTNode element;
     List<ASTData> children;
-    public Boolean after;
-    static CompilationUnit compilationUnit;
 
 
     public ASTData(ASTNode element, String name) {
-    		this.name = name;    
-    		this.element = element;
+        this.name = name;
+        this.element = element;
         this.children = new ArrayList<ASTData>();
-        
+
     }
 
     public ASTData(ASTNode element, Boolean after, String name) {
         this(element, name);
         this.after = after;
     }
-    
-    
+
 
     public static ASTData getRoot() {
         return root;
@@ -51,22 +50,6 @@ public class ASTData {
 
     public static void setRoot(ASTData Root) {
         root = Root;
-    }
-
-    public ASTNode getElement() {
-        return this.element;
-    }
-
-    public List<ASTData> getChildren() {
-        return children;
-    }
-
-    public void setAfter() {
-        this.after = true;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public static void setCompilationUnit(CompilationUnit Unit) {
@@ -91,15 +74,32 @@ public class ASTData {
         return null;
     }
 
+    public ASTNode getElement() {
+        return this.element;
+    }
+
+    public List<ASTData> getChildren() {
+        return children;
+    }
+
+    public void setAfter() {
+        this.after = true;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
     public void addChild(ASTData Child) {
         children.add(Child);
     }
 
     /**
-	 *Busca la linea de codigo especifica dentro del ASTData 
-	 * @param lineNumber
-	 * @return
-	 */
+     * Busca la linea de codigo especifica dentro del ASTData
+     *
+     * @param lineNumber
+     * @return
+     */
     public ASTData findLine(Integer lineNumber) {
 
         if (element != null && (compilationUnit.getLineNumber(element.getStartPosition()) == lineNumber)) {
@@ -114,12 +114,10 @@ public class ASTData {
         return null;
     }
 
-    
-  
-
 
     /**
      * Cambia el AST de Eclipse a una estructura definida por mi
+     *
      * @param Statements Lista de nodos hijos para agregar
      */
     public void addChildren(List<Block> Statements) {
@@ -139,39 +137,41 @@ public class ASTData {
     //MAE OCUPO QUE METAS LOS BLOQUES DE CODIGO ACA, QUE A PUROS IF VERIFIQUE SI ES UN wHILE
     //POR EJEMPLO Y LE APLIQUE UN THIS.ADDCHILD(WHILESTORAGE) Y UN WHILESTORAGE.ADDCHILDREN(BLOCK.STATEMENTS())
     //POR ESO IMPORTE UN MONTON DE VARAS
+
     /**
      * Metodo auxiliar ayuda al metodo addChildren para poder funcionar
      */
     public void addChildrenAux(ASTNode child) {
-    		if (child == null) {
-    			return;
-    			}
-    		
-    		//EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR 
-    		
-		String[] clase_temp = child.getClass().toString().split("\\.");
-		String clase = clase_temp[clase_temp.length - 1];
+        if (child == null) {
+            return;
+        }
 
-		if (clase.equalsIgnoreCase("WhileStatement")) {
-			
-			WhileStatement While = (WhileStatement) child;
-			ASTData WhileStorage = new ASTData(While,While.getExpression().toString());
-			this.addChild(WhileStorage);
-			
-			Block block = (Block) While.getBody();
+        //EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR
 
-			WhileStorage.addChildren(block.statements());
-    	
-		}
+        String[] clase_temp = child.getClass().toString().split("\\.");
+        String clase = clase_temp[clase_temp.length - 1];
+
+        if (clase.equalsIgnoreCase("WhileStatement")) {
+
+            WhileStatement While = (WhileStatement) child;
+            ASTData WhileStorage = new ASTData(While, While.getExpression().toString());
+            this.addChild(WhileStorage);
+
+            Block block = (Block) While.getBody();
+
+            WhileStorage.addChildren(block.statements());
+
+        }
     }
 
     //TODO PRINT ARBOL
-    
+
     /**
      * Muestra todo lo que hay dentro del arbol
-     * @throws ScriptException 
+     *
+     * @throws ScriptException
      */
-    	public void print() throws ScriptException {
+    public void print() throws ScriptException {
         if (element == null) {
             if (this.after) {
 
@@ -181,21 +181,21 @@ public class ASTData {
 
         } else {
             //IF PARA CADA STATEMNET Y UN PRINT
-        	
-        	//EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR en serio cambialo si sabes otra forma
-        		
-        		String[] clase_temp = element.getClass().toString().split("\\.");
-        		String clase = clase_temp[clase_temp.length - 1];
-        		
-        		System.out.print(compilationUnit.getLineNumber(element.getStartPosition()) + " ");
 
-        		if (clase.equalsIgnoreCase("WhileStatement")) {
-        			
-        			WhileStatement While = (WhileStatement) element;
+            //EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR en serio cambialo si sabes otra forma
 
-    				System.out.println("While(" + While.getExpression() + ")");
-        		}
-    			
+            String[] clase_temp = element.getClass().toString().split("\\.");
+            String clase = clase_temp[clase_temp.length - 1];
+
+            System.out.print(compilationUnit.getLineNumber(element.getStartPosition()) + " ");
+
+            if (clase.equalsIgnoreCase("WhileStatement")) {
+
+                WhileStatement While = (WhileStatement) element;
+
+                System.out.println("While(" + While.getExpression() + ")");
+            }
+
         }
 
 
@@ -207,7 +207,7 @@ public class ASTData {
     }
 
     public Integer getLineNumber() {
-		return compilationUnit.getLineNumber(element.getStartPosition());
-	}
+        return compilationUnit.getLineNumber(element.getStartPosition());
+    }
 }
     
