@@ -24,6 +24,7 @@ public class ProyectInfo extends AbstractHandler {
 	List<String> nombreMetodos = new ArrayList<String>();
 	List<MethodDeclaration> nodos = new ArrayList<MethodDeclaration>();  
 	List<String> nombreClases = new ArrayList<String>();
+	List<CompilationUnit> Compilation = new ArrayList<CompilationUnit>();
 	public static final int METHOD_NAME = 0;
 	public static final int METHOD_CLASS = 1;
 	public static final int METHOD_NODE = 2;
@@ -71,11 +72,20 @@ public class ProyectInfo extends AbstractHandler {
             	this.nombreMetodos.add(method.getName() + obtenerParametros(method));
             	this.nombreClases.add(classVisitor.getClassName());
             	this.nodos.add(method);
+            	this.Compilation.add(parse);
             	
             	//method.accept(visitor);
             }
         }
             
+    }
+    
+    public CompilationUnit getCompilation(String clase) {
+    	for (int i = 0; i < this.nombreClases.size(); i++) {
+    		if (this.nombreClases.get(i).equals(clase))
+    			return this.Compilation.get(i);
+    	}
+    	return null;
     }
     
     private String obtenerParametros(MethodDeclaration method) {
