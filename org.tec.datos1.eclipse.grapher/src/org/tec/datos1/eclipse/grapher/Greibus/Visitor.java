@@ -1,5 +1,6 @@
 package org.tec.datos1.eclipse.grapher.Greibus;
 
+// NO USARRRR! ESTAN EN HANDLER
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,6 @@ public class Visitor extends ASTVisitor {
 		
 	}
 	
-	public Visitor() {
-		super();
-	}
 	
 	@Override
 	public boolean preVisit2(ASTNode node) {
@@ -91,6 +89,12 @@ public class Visitor extends ASTVisitor {
 		int endLine = unit.getLineNumber(node.getLength() + node.getStartPosition() - 1);
 		p.setLocation(startLine, endLine);
 		return p;
+	}
+	
+	public Integer getLine(ASTNode node) {
+		int line = unit.getLineNumber(node.getStartPosition());
+		return line;
+		
 	}
 		
 	

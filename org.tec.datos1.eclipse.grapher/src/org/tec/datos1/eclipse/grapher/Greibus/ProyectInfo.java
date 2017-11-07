@@ -62,7 +62,7 @@ public class ProyectInfo extends AbstractHandler {
             // now create the AST for the ICompilationUnits
             CompilationUnit parse = parse(unit);
             MethodVisitor visitorMethod = new MethodVisitor();
-            Visitor visitor = new Visitor();
+            Visitor visitor = new Visitor(parse);
             ClassVisitor classVisitor = new ClassVisitor();
             parse.accept(classVisitor);
             parse.accept(visitorMethod);
@@ -117,6 +117,16 @@ public class ProyectInfo extends AbstractHandler {
     	
     }
     
+//    public MethodDeclaration getMethod (String methodName) {
+//    	for (int i = 0; i < this.nombreMetodos.size(); i ++) {
+//    		if (this.nombreMetodos.get(i).equals(methodName)) {
+//    			return this.nodos.get(i);
+//    		}
+//    	}
+//    	
+//    	return null;
+//    }
+    
 
 
     /**
@@ -162,6 +172,10 @@ public class ProyectInfo extends AbstractHandler {
 			return null;
 		}
 		
+	}
+	
+	public List<MethodDeclaration> getMethods () {
+		return this.nodos;
 	}
 	
 	public List<Object> getMethodDescriptorByClass(String className, int descriptorId) {

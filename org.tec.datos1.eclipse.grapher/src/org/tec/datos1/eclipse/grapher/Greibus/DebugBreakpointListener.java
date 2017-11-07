@@ -5,7 +5,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 
 import org.eclipse.debug.core.DebugException;
-
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Message;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.debug.core.*;
@@ -13,6 +13,13 @@ import org.eclipse.jdt.internal.compiler.ast.ASTNode;
 
 
 public class DebugBreakpointListener implements IJavaBreakpointListener {
+	
+	@Override
+	public void breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint,
+			DebugException exception) {
+		
+	}
+	
 	
 	@Override
 	public void breakpointInstalled(IJavaDebugTarget target,
@@ -26,7 +33,8 @@ public class DebugBreakpointListener implements IJavaBreakpointListener {
 		String methodClass = this.getClassName(breakpoint);
 		ProyectInfo myInfo = new ProyectInfo();
 		MethodDeclaration nodo = myInfo.getMethod(methodName, methodClass);
-		Visitor visitor = new Visitor();
+		CompilationUnit unit = myInfo.getCompilation(methodClass);
+		Visitor visitor = new Visitor(unit);
 		if (nodo != null) {
 			System.out.println("Nombre metodo: " + methodName);
 			nodo.accept(visitor);
@@ -73,12 +81,7 @@ public class DebugBreakpointListener implements IJavaBreakpointListener {
 		return metodo;
 	}
 	
-	@Override
-	public void breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint,
-			DebugException exception) {
-		
-	}
-	
+
 	@Override
 	public void breakpointHasCompilationErrors(IJavaLineBreakpoint breakpoint,
 			Message[] errors) {

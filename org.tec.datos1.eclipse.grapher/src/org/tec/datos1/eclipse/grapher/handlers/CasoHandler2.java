@@ -19,73 +19,50 @@ import org.eclipse.jdt.core.dom.*;
 //import org.eclipse.jdt.core.dom.CompilationUnit;
 //import org.eclipse.jdt.core.dom.IfStatement;
 //import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.debug.core.JDIDebugModel;
+import org.tec.datos1.eclipse.grapher.Greibus.DebugBreakpointListener;
+import org.tec.datos1.eclipse.grapher.debugger.DebugListener;
 
 public class CasoHandler2 extends AbstractHandler {
+	  private static final String JDT_NATURE = "org.eclipse.jdt.core.javanature";
 
-    private static final String JDT_NATURE = "org.eclipse.jdt.core.javanature";
+	    @Override
+	    public Object execute(ExecutionEvent event) throws ExecutionException {
+	    	JDIDebugModel.addJavaBreakpointListener(new DebugListener());
 
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IWorkspaceRoot root = workspace.getRoot();
-        // Get all projects in the workspace
-        IProject[] projects = root.getProjects();
-        // Loop over all projects
-        for (IProject project : projects) {
-            try {
-                if (project.isNatureEnabled(JDT_NATURE)) {
-                    analyseMethods(project);
-                }
-            } catch (CoreException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+	    	return null;
+	    }
 
-    private void analyseMethods(IProject project) throws JavaModelException {
-        IPackageFragment[] packages = JavaCore.create(project)
-                .getPackageFragments();
-        // parse(JavaCore.create(project));
-        for (IPackageFragment mypackage : packages) {
-            if (mypackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
-                createAST(mypackage);
-            }
+	    private void analyseMethods(IProject project) throws JavaModelException {
+	        IPackageFragment[] packages = JavaCore.create(project)
+	                .getPackageFragments();
+	        for (IPackageFragment mypackage : packages) {
+	            if (mypackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
+	                createAST(mypackage);
+	            }
 
-        }
-    }
+	        }
+	    }
 
-    private void createAST(IPackageFragment mypackage)
-            throws JavaModelException {
-        for (ICompilationUnit unit : mypackage.getCompilationUnits()) {
-            // now create the AST for the ICompilationUnits
-            CompilationUnit parse = parse(unit);
-            MethodVisitor visitorMethod = new MethodVisitor();
-            Visitor visitor = new Visitor();
-            parse.accept(visitorMethod);
-            for (MethodDeclaration method : visitorMethod.getMethods()) {
-            	System.out.println("Metodo " + method.getName());
-               method.accept(visitor);
-            }
+	    private void createAST(IPackageFragment mypackage)
+	            throws JavaModelException {
+	        JDIDebugModel.addJavaBreakpointListener(new DebugBreakpointListener());
+	        
+	    }
 
-          
-        }
-    }
+	    /**
+	     * Reads a ICompilationUnit and creates the AST DOM for manipulating the
+	     * Java source file
+	     *
+	     * @param unit
+	     * @return
+	     */
 
-    /**
-     * Reads a ICompilationUnit and creates the AST DOM for manipulating the
-     * Java source file
-     *
-     * @param unit
-     * @return
-     */
-
-    private static CompilationUnit parse(ICompilationUnit unit) {
-        ASTParser parser = ASTParser.newParser(AST.JLS3);
-        parser.setKind(ASTParser.K_COMPILATION_UNIT);
-        parser.setSource(unit);
-        parser.setResolveBindings(true);
-        return (CompilationUnit) parser.createAST(null); // parse
-    }
-}
-
+	    private static CompilationUnit parse(ICompilationUnit unit) {
+	        ASTParser parser = ASTParser.newParser(AST.JLS3);
+	        parser.setKind(ASTParser.K_COMPILATION_UNIT);
+	        parser.setSource(unit);
+	        parser.setResolveBindings(true);
+	        return (CompilationUnit) parser.createAST(null); // parse
+	    }
+	}

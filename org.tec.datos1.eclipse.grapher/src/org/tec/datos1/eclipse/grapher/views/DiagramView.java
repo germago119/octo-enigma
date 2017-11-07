@@ -3,6 +3,7 @@ package org.tec.datos1.eclipse.grapher.views;
 import java.util.LinkedList;
 import javax.inject.Inject;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.PaintEvent;
@@ -15,6 +16,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.tec.datos1.eclipse.grapher.Greibus.ProyectInfo;
+import org.tec.datos1.eclipse.grapher.Greibus.Visitor;
 import org.tec.datos1.eclipse.grapher.assets.ASTDataParser;
 import org.tec.datos1.eclipse.grapher.assets.Illustrator;
 import org.tec.datos1.eclipse.grapher.data.ASTData;
@@ -60,7 +63,13 @@ public class DiagramView {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    diagram = astParser.parse(ASTData.getMethod(methodSelector.getText()).getChildren());
+                	ProyectInfo info = new ProyectInfo();
+                	//String metodoNombre = methodSelector.getText();
+                	String metodoNombre = "segundoTest(int, String[])";
+                	String claseNombre = "carroTest";
+                	CompilationUnit unit = info.getCompilation(claseNombre);
+                	Visitor visitor = new Visitor(unit);
+                    diagram = astParser.parse(info.getMethod(metodoNombre, claseNombre), visitor);
                     diMension = astParser.getdimension();
                     canvas.setSize(diMension.maxWidth + 60, diMension.afterOutput.y + 40);
                     if (diMension.maxWidth / 2 > 100) {

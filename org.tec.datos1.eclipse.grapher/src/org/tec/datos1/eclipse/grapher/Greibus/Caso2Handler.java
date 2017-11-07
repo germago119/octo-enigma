@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.debug.core.IJavaBreakpointListener;
 import org.eclipse.jdt.debug.core.JDIDebugModel;
+import org.tec.datos1.eclipse.grapher.debugger.DebugListener;
 
 public class Caso2Handler extends AbstractHandler {
 
@@ -20,7 +21,7 @@ public class Caso2Handler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	JDIDebugModel.addJavaBreakpointListener(new DebugBreakpointListener());
+    	JDIDebugModel.addJavaBreakpointListener(new DebugListener());
 
     	return null;
     }
