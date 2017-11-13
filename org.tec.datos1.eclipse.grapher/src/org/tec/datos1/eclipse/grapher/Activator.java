@@ -3,7 +3,7 @@ package org.tec.datos1.eclipse.grapher;
 import org.eclipse.jdt.debug.core.JDIDebugModel;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.tec.datos1.eclipse.grapher.debugger.DebugListener;
+import org.tec.datos1.eclipse.grapher.Roger.DL;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -21,7 +21,7 @@ public class Activator implements BundleActivator {
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
      */
     public void start(BundleContext bundleContext) throws Exception {
-        JDIDebugModel.addJavaBreakpointListener(new DebugListener());
+        JDIDebugModel.addJavaBreakpointListener(new DL());
         Activator.context = bundleContext;
 
     }

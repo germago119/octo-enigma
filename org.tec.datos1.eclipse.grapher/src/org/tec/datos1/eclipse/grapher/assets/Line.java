@@ -1,7 +1,10 @@
 package org.tec.datos1.eclipse.grapher.assets;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
 
 public class Line implements Illustrator {
     Point first;
@@ -49,8 +52,12 @@ public class Line implements Illustrator {
     }
 
 
-    public void sketch(GC gc) {
-        switch (this.type) {
+    public void sketch(GC gc, int line) {
+	    	Display display = Display.getCurrent();
+	    	Color color = display.getSystemColor(SWT.COLOR_BLACK);
+	    	gc.setForeground(color);
+	    	gc.setLineWidth(1);
+	    		switch (this.type) {
             case DORETURN:
                 gc.drawLine(this.first.x, this.first.y, this.first.x - this.width / 2 - 20, this.first.y);
                 gc.drawLine(this.first.x - this.width / 2 - 20, this.first.y, this.first.x - this.width / 2 - 20, this.last.y);

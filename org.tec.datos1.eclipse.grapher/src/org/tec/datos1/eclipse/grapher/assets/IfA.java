@@ -74,9 +74,22 @@ public class IfA implements Illustrator {
 
 
     @Override
-    public void sketch(GC gc) {
-        shape = new int[]{input.x, input.y, outputF.x, outputF.y, input.x, input.y + gc.stringExtent(text).y + 40, outputT.x, outputT.y};
-
+    public void sketch(GC gc, int line) {
+        shape = new int[]{input.x, input.y, outputF.x, outputF.y, input.x, input.y + gc.stringExtent(text).y + 40, outputT.x, outputT.y};	
+        Display display = Display.getCurrent();
+		Color color;
+		int border;
+		if (line == this.line) {
+			color = display.getSystemColor(SWT.COLOR_RED);
+			border = 3;
+		} else {
+			color = display.getSystemColor(SWT.COLOR_BLACK);
+			border = 1;
+		}
+		gc.setForeground(color);
+		gc.setLineWidth(border);
+		gc.drawPolygon(shape);
+		gc.drawText(text, input.x - gc.stringExtent(text).x / 2, input.y + 20);
         gc.drawPolygon(shape);
         gc.drawText(text, input.x - gc.stringExtent(text).x / 2, input.y + 20);
     }

@@ -1,11 +1,9 @@
 package org.tec.datos1.eclipse.grapher.assets;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
+
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Display;
+
 
 
 public class Run implements Illustrator {
@@ -36,9 +34,9 @@ public class Run implements Illustrator {
 
 
     @Override
-    public void sketch(GC gc) {
+    public void sketch(GC gc, int line) {
         gc.drawOval(input.x - this.width / 2, input.y, this.width, 40);
-        gc.drawText("Beginning", input.x - gc.stringExtent("Start").x / 2, input.y + (40 - gc.stringExtent("Beginning").y) / 2);
+        gc.drawText("Start", input.x - gc.stringExtent("Start").x / 2, input.y + (40 - gc.stringExtent("Start").y) / 2);
     }
 
     @Override

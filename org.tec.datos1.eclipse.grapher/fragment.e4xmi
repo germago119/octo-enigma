@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_BxaXACerEeWxCPrV0pAZQQ">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_EI7oACerEeWxCPrV0pAZQQ" featurename="descriptors" parentElementId="xpath:/">
-    <elements xsi:type="basic:PartDescriptor" xmi:id="_KMklcCerEeWxCPrV0pAZQQ" elementId="org.tec.datos1.eclipse.grapher.mainview" label="Grapher" iconURI="platform:/plugin/org.tec.datos1.eclipse.grapher/icons/workflow.png" tooltip="" category="Grapher" contributionURI="bundleclass://org.tec.datos1.eclipse.grapher/org.tec.datos1.eclipse.grapher.views.DiagramView">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_KMklcCerEeWxCPrV0pAZQQ" elementId="org.tec.datos1.eclipse.grapher.mainview" label="Grapher" iconURI="platform:/plugin/org.tec.datos1.graph.eclipse/icons/workflow.png" tooltip="" category="Grapher" contributionURI="bundleclass://org.tec.datos1.graph.eclipse/org.tec.datos1.eclipse.grapher.Roger.DiagramView2">
       <tags>View</tags>
       <tags>categoryTag:Sample Category</tags>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_g64RQK_UEeeYCvxE0peUaw" featurename="handlers" parentElementId="xpath:/">
-    <elements xsi:type="commands:Handler" xmi:id="_xotggK_UEeeYCvxE0peUaw" elementId="org.tec.datos1.eclipse.grapher.handler.stepin" contributionURI="bundleclass://org.tec.datos1.eclipse.grapher/org.tec.datos1.eclipse.grapher.handlers.StepInH" command="_K1w-0K_VEeeYCvxE0peUaw"/>
-    <elements xsi:type="commands:Handler" xmi:id="_4e_b0K_UEeeYCvxE0peUaw" elementId="org.tec.datos1.eclipse.grapher.handler.stepover" contributionURI="bundleclass://org.tec.datos1.eclipse.grapher/org.tec.datos1.eclipse.grapher.handlers.StepOverH" command="_bALX8K_VEeeYCvxE0peUaw"/>
+    <elements xsi:type="commands:Handler" xmi:id="_4e_b0K_UEeeYCvxE0peUaw" elementId="org.tec.datos1.eclipse.grapher.handler.stepover" contributionURI="bundleclass://org.tec.datos1.graph.eclipse/org.tec.datos1.eclipse.grapher.handlers.StepOverH" command="_bALX8K_VEeeYCvxE0peUaw"/>
+    <elements xsi:type="commands:Handler" xmi:id="_xotggK_UEeeYCvxE0peUaw" elementId="org.tec.datos1.eclipse.grapher.handler.stepin" contributionURI="bundleclass://org.tec.datos1.graph.eclipse/org.tec.datos1.eclipse.grapher.handlers.StepInH" command="_K1w-0K_VEeeYCvxE0peUaw"/>
+    <elements xsi:type="commands:Handler" xmi:id="_p6u8ILrgEeeTZLRilA2UMQ" elementId="org.tec.datos1.eclipse.grapher.handler.main" contributionURI="bundleclass://org.tec.datos1.graph.eclipse/org.tec.datos1.eclipse.grapher.handlers.MainLoad" command="_vqwaALrgEeeTZLRilA2UMQ"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_HmRkAK_VEeeYCvxE0peUaw" featurename="commands" parentElementId="xpath:/">
     <elements xsi:type="commands:Command" xmi:id="_K1w-0K_VEeeYCvxE0peUaw" elementId="org.tec.datos1.eclipse.grapher.command.stepin" commandName="Step In"/>
     <elements xsi:type="commands:Command" xmi:id="_bALX8K_VEeeYCvxE0peUaw" elementId="org.tec.datos1.eclipse.grapher.command.stepover" commandName="Step Over"/>
+    <elements xsi:type="commands:Command" xmi:id="_vqwaALrgEeeTZLRilA2UMQ" elementId="org.tec.datos1.eclipse.grapher.command.main" commandName="Main"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_c2QHoLFoEeefrPZk3-rHaA" featurename="trimContributions" parentElementId="xpath:/">
     <elements xsi:type="menu:TrimContribution" xmi:id="_iTHY8LFoEeefrPZk3-rHaA" elementId="org.tec.datos1.eclipse.grapher.trimcontribution.0" parentId="org.eclipse.ui.main.toolbar" positionInParent="after=additions">
       <children xsi:type="menu:ToolBar" xmi:id="_9BC0ILFoEeefrPZk3-rHaA" elementId="org.tec.datos1.eclipse.grapher.toolbar">
-        <children xsi:type="menu:HandledToolItem" xmi:id="__af-0LFoEeefrPZk3-rHaA" elementId="org.tec.datos1.eclipse.grapher.handledtoolitem.stepin" label="Step In" iconURI="platform:/plugin/org.tec.datos1.eclipse.grapher/icons/stepinto.png" command="_K1w-0K_VEeeYCvxE0peUaw"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Ff_WYLFpEeefrPZk3-rHaA" elementId="org.tec.datos1.eclipse.grapher.handledtoolitem.stepover" label="Step Over" iconURI="platform:/plugin/org.tec.datos1.eclipse.grapher/icons/stepover.png" command="_bALX8K_VEeeYCvxE0peUaw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="__af-0LFoEeefrPZk3-rHaA" elementId="org.tec.datos1.eclipse.grapher.handledtoolitem.stepin" label="Step In" iconURI="platform:/plugin/org.tec.datos1.graph.eclipse/icons/stepin.png" command="_K1w-0K_VEeeYCvxE0peUaw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Ff_WYLFpEeefrPZk3-rHaA" elementId="org.tec.datos1.eclipse.grapher.handledtoolitem.stepover" label="Step Over" iconURI="platform:/plugin/org.tec.datos1.graph.eclipse/icons/stepov.png" command="_bALX8K_VEeeYCvxE0peUaw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_zJsmELrgEeeTZLRilA2UMQ" elementId="org.tec.datos1.eclipse.grapher.handledtoolitem.load" label="Main" iconURI="platform:/plugin/org.tec.datos1.graph.eclipse/icons/firebase.png" command="_vqwaALrgEeeTZLRilA2UMQ"/>
       </children>
     </elements>
   </fragments>

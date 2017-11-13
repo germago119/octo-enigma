@@ -56,24 +56,39 @@ public class ASTData {
         compilationUnit = Unit;
     }
 
+    public static CompilationUnit getCompUnit() {
+		return compilationUnit;
+	}
+    
     public static List<String> getMethods() {
-        List<String> result = new ArrayList<>();
-        if (root == null) {
-            return null;
-        }
-        for (ASTData method : root.getChildren()) {
-            result.add(method.getName());
-        }
-        return result;
-    }
-
-    public static ASTData getMethod(String Method) {
-        for (ASTData method : root.getChildren()) {
-            if (method.getName().equals(Method)) return method;
-        }
-        return null;
-    }
-
+		List<String> result = new ArrayList<>();
+		if (root == null) {
+			return null;
+		}
+		for (ASTData method :root.getChildren()) {
+			result.add(method.getName());
+		}
+		return result;
+	}
+	
+	public static ASTData getMethod(String Method) {
+		for (ASTData method :root.getChildren()) {
+			if (method.getName().equals(Method)) return method;
+		}
+		return null;
+	}
+	
+	public static ASTData getMethodByLine(Integer Line) {
+		ASTData result = null;
+		for (ASTData method :root.getChildren()) {
+			if (method.getLineNumber() > Line) {
+				return result;
+			}
+			result = method;
+		}
+		return result;
+	}
+	
     public ASTNode getElement() {
         return this.element;
     }
@@ -134,78 +149,108 @@ public class ASTData {
     }
 
 
-    //MAE OCUPO QUE METAS LOS BLOQUES DE CODIGO ACA, QUE A PUROS IF VERIFIQUE SI ES UN wHILE
-    //POR EJEMPLO Y LE APLIQUE UN THIS.ADDCHILD(WHILESTORAGE) Y UN WHILESTORAGE.ADDCHILDREN(BLOCK.STATEMENTS())
-    //POR ESO IMPORTE UN MONTON DE VARAS
+    
+    @SuppressWarnings("unchecked")
+	public void addChildrenAux(ASTNode child) {
+		if (child == null) {return;}
+		String[] clazz_aux = child.getClass().toString().split("\\.");
+		String clazz = clazz_aux[clazz_aux.length - 1];
 
-    /**
-     * Metodo auxiliar ayuda al metodo addChildren para poder funcionar
-     */
-    public void addChildrenAux(ASTNode child) {
-        if (child == null) {
-            return;
-        }
+		if (clazz.equalsIgnoreCase("WhileStatement")) {
+			
+			WhileStatement While = (WhileStatement) child;
+			ASTData WhileStorage = new ASTData(While,While.getExpression().toString());
+			this.addChild(WhileStorage);
+			
+			Block block = (Block) While.getBody();
+			
+			WhileStorage.addChildren(block.statements());
 
-        //EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR
+		} else if (clazz.equalsIgnoreCase("DoStatement")) {
+			DoStatement Do = (DoStatement) child;
+			ASTData DoStorage = new ASTData(Do, Do.getExpression().toString());
+			this.addChild(DoStorage);
+			//System.out.println("Do: \n" + Do.getExpression());
+			Block block = (Block) Do.getBody();
 
-        String[] clase_temp = child.getClass().toString().split("\\.");
-        String clase = clase_temp[clase_temp.length - 1];
+			DoStorage.addChildren(block.statements());
 
-        if (clase.equalsIgnoreCase("WhileStatement")) {
+		} else if (clazz.equalsIgnoreCase("EnhancedForStatement")) {
+			EnhancedForStatement EnhancedFor = (EnhancedForStatement) child;
+			ASTData EnhancedForStorage = new ASTData(EnhancedFor,EnhancedFor.getExpression().toString());
+			this.addChild(EnhancedForStorage);
+			Block block = (Block) EnhancedFor.getBody();
 
-            WhileStatement While = (WhileStatement) child;
-            ASTData WhileStorage = new ASTData(While, While.getExpression().toString());
-            this.addChild(WhileStorage);
+			EnhancedForStorage.addChildren(block.statements());
 
-            Block block = (Block) While.getBody();
+		} else if (clazz.equalsIgnoreCase("ForStatement")) {
+			ForStatement For = (ForStatement) child;
+			ASTData ForStorage = new ASTData(For,For.getExpression().toString());
+			this.addChild(ForStorage);
+			Block block = (Block) For.getBody();
 
-            WhileStorage.addChildren(block.statements());
+			ForStorage.addChildren(block.statements());
 
-        }
+		} else if (clazz.equalsIgnoreCase("IfStatement")) {
+			IfStatement If = (IfStatement) child;
+			ASTData IfStorage = new ASTData(If,If.getExpression().toString());
+			this.addChild(IfStorage);
+			ASTData thenStorage = new ASTData(null,true,If.getExpression().toString());
+			IfStorage.addChild(thenStorage);
+			Block b1 = (Block) If.getThenStatement();
+			thenStorage.addChildren(b1.statements());
+
+			if (If.getElseStatement() instanceof Block) {
+				ASTData elseStorage = new ASTData(null,false,If.getExpression().toString());
+				IfStorage.addChild(elseStorage);
+				Block b2 = (Block) If.getElseStatement();
+				elseStorage.addChildren(b2.statements());
+			} else {
+				ASTData elseStorage = new ASTData(null,false, If.getExpression().toString());
+				IfStorage.addChild(elseStorage);
+				IfStatement If2 = (IfStatement) If.getElseStatement();
+				elseStorage.addChildrenAux(If2);
+			}
+
+		} else if(clazz.equalsIgnoreCase("TryStatement")){
+			TryStatement Try = (TryStatement) child;
+			ASTData TryStorage = new ASTData(Try,"Try");
+			this.addChild(TryStorage);
+			
+			Block block = (Block) Try.getBody();
+
+			TryStorage.addChildren(block.statements());
+
+		} else if (clazz.equalsIgnoreCase("ExpressionStatement")) {
+			
+			ExpressionStatement Expression = (ExpressionStatement) child;
+			try{
+				
+				MethodInvocation methodInvocation = (MethodInvocation) Expression.getExpression();
+				String methodClass = methodInvocation.resolveMethodBinding().getDeclaringClass().getQualifiedName();
+				if (methodClass.split("\\.")[0].equals("java")) {
+					ASTData ExpressionStorage = new ASTData(Expression,Expression.toString());
+					this.addChild(ExpressionStorage);
+					return;
+				}
+				ASTData MethoInvocationStorage = new ASTData(methodInvocation, methodInvocation.toString());
+				this.addChild(MethoInvocationStorage);
+				
+			}catch(Exception ex) {
+				ASTData ExpressionStorage = new ASTData(Expression,Expression.toString());
+				this.addChild(ExpressionStorage);
+			}
+			
+		}else if (clazz.equalsIgnoreCase("VariableDeclarationStatement")) {
+			VariableDeclarationStatement Variable = (VariableDeclarationStatement) child;
+			ASTData VariableStorage = new ASTData(Variable,Variable.toString());
+			this.addChild(VariableStorage);
+		}else {}
+
     }
 
-    //TODO PRINT ARBOL
 
-    /**
-     * Muestra todo lo que hay dentro del arbol
-     *
-     * @throws ScriptException
-     */
-    public void print() throws ScriptException {
-        if (element == null) {
-            if (this.after) {
-
-            } else {
-                System.out.println("Else: ");
-            }
-
-        } else {
-            //IF PARA CADA STATEMNET Y UN PRINT
-
-            //EJEMPLO VOS SABES MEJOR USAR TODO ESTO ENTONCES LO PUEDES CAMBIAR en serio cambialo si sabes otra forma
-
-            String[] clase_temp = element.getClass().toString().split("\\.");
-            String clase = clase_temp[clase_temp.length - 1];
-
-            System.out.print(compilationUnit.getLineNumber(element.getStartPosition()) + " ");
-
-            if (clase.equalsIgnoreCase("WhileStatement")) {
-
-                WhileStatement While = (WhileStatement) element;
-
-                System.out.println("While(" + While.getExpression() + ")");
-            }
-
-        }
-
-
-        for (ASTData child : children) {
-            child.print();
-
-        }
-
-    }
-
+ 
     public Integer getLineNumber() {
         return compilationUnit.getLineNumber(element.getStartPosition());
     }

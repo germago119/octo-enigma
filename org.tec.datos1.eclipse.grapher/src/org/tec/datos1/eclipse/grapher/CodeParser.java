@@ -10,8 +10,9 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.tec.datos1.eclipse.grapher.Roger.Visitor2;
 import org.tec.datos1.eclipse.grapher.data.ASTData;
-import org.tec.datos1.eclipse.grapher.handlers.*;
+
 
 public class CodeParser {
 
@@ -37,7 +38,7 @@ public class CodeParser {
 
         CompilationUnit parse = parse(icUnit);
         ASTData.setCompilationUnit(parse);
-        MethodVisitor visitor = new MethodVisitor();
+        Visitor2 visitor = new Visitor2();
         parse.accept(visitor);
 
     }
@@ -49,7 +50,8 @@ public class CodeParser {
      * @param unit
      * @return
      */
-    public static CompilationUnit parse(ICompilationUnit unit) {
+    @SuppressWarnings("deprecation")
+	public static CompilationUnit parse(ICompilationUnit unit) {
 
         ASTParser parser = ASTParser.newParser(AST.JLS3);
         parser.setKind(ASTParser.K_COMPILATION_UNIT);

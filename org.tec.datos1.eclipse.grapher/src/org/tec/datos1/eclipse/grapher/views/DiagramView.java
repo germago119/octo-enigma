@@ -31,6 +31,8 @@ public class DiagramView {
     LinkedList<Illustrator> diagram;
     DiMension diMension;
 
+    
+    
     @Inject
     public DiagramView(Composite parent) {
 
@@ -94,7 +96,7 @@ public class DiagramView {
             @Override
             public void paintControl(PaintEvent e) {
                 for (Illustrator widget : diagram) {
-                    widget.sketch(e.gc);
+                    //widget.sketch(e.gc);
                 }
             }
         });

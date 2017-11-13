@@ -61,7 +61,19 @@ public class WhileA implements Illustrator {
     }
 
     @Override
-    public void sketch(GC gc) {
+    public void sketch(GC gc, int line) {
+    		Display display = Display.getCurrent();
+		Color color;
+		int border;
+		if (line == this.line) {
+			color = display.getSystemColor(SWT.COLOR_RED);
+			border = 3;
+		} else {
+			color = display.getSystemColor(SWT.COLOR_BLACK);
+			border = 1;
+		}
+		gc.setForeground(color);
+		gc.setLineWidth(border);
         int[] shape = new int[]{input.x, input.y, outputF.x, outputF.y, outputT.x, outputT.y, returnInput.x, returnInput.y};
 
         gc.drawPolygon(shape);
