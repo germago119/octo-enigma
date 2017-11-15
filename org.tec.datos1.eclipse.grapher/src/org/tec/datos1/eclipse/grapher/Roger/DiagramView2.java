@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Composite;
 import org.tec.datos1.eclipse.grapher.assets.ADP;
 import org.tec.datos1.eclipse.grapher.assets.Illustrator;
@@ -50,6 +51,7 @@ public class DiagramView2 {
 		methodSelector.setLayoutData(comboLayout);
 		
 		ScrolledComposite container = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		container.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 		container.setLayoutData(diagramLayout);
 		canvas = new Canvas(container, SWT.NONE);
 		canvas.setSize(1000, 1000);

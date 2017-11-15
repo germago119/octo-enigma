@@ -34,6 +34,10 @@ public class DL implements IJavaBreakpointListener{
 			lineNumber = lineBreak.getLineNumber();
 		}catch(CoreException e) {}
 		
+		try {
+			DiagramView2.setLineNumber(lineNumber);
+			}catch(org.eclipse.swt.SWTException e) {}
+		
 		return lineNumber;
 	}
 
